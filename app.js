@@ -7,12 +7,15 @@ dot.config()
 
 var bodyParser = require('body-parser')
 
+var listRouter = require('./router/index')
+
+
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine','ejs')
 
 app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extends :false}))
-app.use('/',index)
+app.use('/',listRouter)
 
 port =process.env.PORT ||3000
 app.listen(port,()=>{

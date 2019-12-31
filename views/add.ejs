@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>add page</title>
+</head>
+<body>
+    <h1>this is list</h1>
+    <hr>
+    <ol>
+        <%for(var i=0;i<topics.length; i++) { %>
+        <li><%=topics[i].title %> : <%=topics[i].description %> </li>
+        <% } %>
+    </ol>
+    
+        <article>
+            <form method="POST" action="/topic/add">
+                <p>제목 : <input type="text", value ="", name="title", placeholder="타이틀" /></p>
+                <p>내용 : <input type="text", value ="", name="description", placeholder="내용을 입력하세요" /></p>
+                <p>작가 : <input type="text", value ="", name="author", placeholder="작가를 입력하세요" /></p>
+                <p><input type="submit",value="",name="submit"/></p>
+            </form>
+        </article>
+    
+</body>
+</html>
