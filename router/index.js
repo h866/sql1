@@ -8,16 +8,16 @@ require('dotenv').config()
 
 //json형태로 데이터베이스 연결
 var db =mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password:process.env.DB_PW,
-    database : process.env.DB_NAME  
+    host: process.env.DB_HOST, //'localhost'
+    user: process.env.DB_USER, //'root'
+    password:process.env.DB_PW,//'1234'
+    database : process.env.DB_NAME  //'o2'
 })
 
 router.get('/topic/add',(req,res)=>{
-    var sql ='SELECT * FROM topic' //조회해서 가져오는 쿼리문.
+    var sql ='SELECT * FROM topic' //조회해서 데이터베이스 가져오는 쿼리문.
     db.query(sql,(err,result)=>{
-        if(!err){
+        if(!err){//에러없으면
         console.log(result)
         res.render('add',{topics :result})
         }else
@@ -47,18 +47,41 @@ router.post('/topic/add',(req,res)=>{
     })
 })
 // /: 은 /이후 params로 인식됨. /topic/1 은 1이란 params값
-router.get('/topic/:id',(req,res)=>{
-    console.log(req.params.id)
-    var id = req.params.id
-    var sql = 'SELECT * FROM topic WHERE id=?'
-    db.query(sql,[id],(err,result)=>{
-        if(!err){
-        res.render('test',{topic:result})
-        }else
+router.get(['/topic','/topic/:id'],(req,res)=>{
+    var sql = 'SELECT * FROM topic'
+    db.query(sql,(err,results)=>{
+        var id = req.params.id
+        if(id){
+        var sql1 = 'SELECT * FROM topic WHERE id=?'
+        db.query(sql1,[id],(err,result)=>{
+            if(!err){
+                res.render('view',{topics :results, topic :result[0]})
+        }else{
         console.log(err)
+        res.status(500).send("Internal Server Error") //연결지연
+        }
     })   
-})
+        }else{
+            res.render('view',{topics:results, topic:undefined})
+        } 
+       })
+    
+    })
 
 
+//     console.log(req.params.id)
+//     var id = req.params.id
+    
+//     db.query(sql,[id],(err,result)=>{
+//         if(!err){
+//         res.render('test',{topic:result})
+//         }else
+//         console.log(err)
+//     })   
+// })
+
+// router.get('/topic/:id/edit',()=>{
+
+// })
 
 module.exports =router

@@ -5,7 +5,7 @@ var ejs=require('ejs')
 var dot =require('dotenv')
 dot.config()
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser') //언어해석.
 
 var listRouter = require('./router/index')
 
@@ -13,6 +13,7 @@ var listRouter = require('./router/index')
 app.set('views',path.join(__dirname,'views'))
 app.set('view engine','ejs')
 
+app.use(bodyParser.json())//json형태로 들어오는거 다 해석
 app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extends :false}))
 app.use('/',listRouter)

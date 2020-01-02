@@ -7,22 +7,28 @@
     <title>add page</title>
 </head>
 <body>
-    <h1>this is list</h1>
+    <!-- 링크거는명령어 href -->
+    <h1><a href="/topic">ServerSide JavaScript</a></h1> 
     <hr>
     <ol>
         <%for(var i=0;i<topics.length; i++) { %>
-        <li><%=topics[i].title %> : <%=topics[i].description %> </li>
+        <li>
+            <a href="/topic/<%=topics[i].id %>"><%=topics[i].title %></a> 
+             : <%=topics[i].description %> </li>
         <% } %>
     </ol>
     
         <article>
             <form method="POST" action="/topic/add">
-                <p>제목 : <input type="text", value ="", name="title", placeholder="타이틀" /></p>
-                <p>내용 : <input type="text", value ="", name="description", placeholder="내용을 입력하세요" /></p>
-                <p>작가 : <input type="text", value ="", name="author", placeholder="작가를 입력하세요" /></p>
-                <p><input type="submit",value="",name="submit"/></p>
+                <p><input type="text" value ="<%=topics.title %>" name="title" placeholder="title" /></p>
+                <p><textarea name="description" rows="6" cols="50" placeholder="description"></textarea></p>
+                <!-- <p>내용 : <input type="text", value ="", name="description", placeholder="내용을 입력하세요" /></p> -->
+                <p><input type="text" value ="<%=topics.author %>" name="author" placeholder="author" /></p>
+                <p><input type="submit"/></p>
             </form>
         </article>
-    
+    <ul>
+        <li><a href="/topic/add">add</a></li>
+    </ul>
 </body>
 </html>
