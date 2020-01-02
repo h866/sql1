@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>edit</title>
+</head>
+<body>
+  
+    <article>
+      <form action="/topic/<%= topic.id %>/delete" method="post">
+        <p><input type="text" name="title" value='<%= topic.title %>' placeholder="title" ></p> // value를 통하여 전달받은 topic객체의(수정해야할) 데이터를 표시할 수 있다.
+        <p><textarea name="description" rows="6" cols="50" placeholder="description"><%= topic.description %></textarea></p>// textarea는 태그들 사이에 데이터를 입력해야 표시가능.(	rows는 행이고, cols는 열이다 이걸 통하여 textarea의 크기를 조정한다. )
+        <p><input type="text" name="author" value='<%= topic.author %>' placeholder="author"></p>
+        <p><input type="submit" value='delete'></p>
+      </form>
+    </article>
+    <ul>
+        <li><a href="/topic/add">add</a></li>
+    </ul>
+  </body>
+</html>

@@ -69,19 +69,70 @@ router.get(['/topic','/topic/:id'],(req,res)=>{
     })
 
 
-//     console.log(req.params.id)
-//     var id = req.params.id
+
+
+ router.get('/topic/:id/edit',(req,res)=>{
+    var sql = 'SELECT * FROM topic'
+    db.query(sql,(err,results)=>{
+        var sql = 'SELECT * FROM topic WHERE id=?'
+        var id = req.params.id
+        db.query(sql,[id],(err,result)=>{
+        if(id){
+                res.render('edit',{topics:results, topic:result[0]})
+        }else{
+                res.send('no id')
+        }
+        })
+    })
+ })
+
+router.post('/topic/:id/edit',(req,res)=>{
+
+    var id = req.params.id
+    var title = req.body.title
+    var description = req.body.description
+    var author = req.body.author
+    var sql ='UPDATE topic SET title=? , description =?, author = ? WHERE id =?'
+
+    db.query(sql,[title, description,author, id],(err,result)=>{
+        if(!err){
+            res.redirect(`/topic/${id}/edit`)
+        }else {
+            console.log(err)
+        }
+    })
+
+})
+
+router.get('/topic/:id/delete',(req,res)=>{
+    var sql = 'SELECT * FROM topic'
+    db.query(sql,(err,results)=>{
+        var sql = 'SELECT * FROM topic WHERE id=?'
+        var id = req.params.id
+        db.query(sql,[id],(err,result)=>{
+        if(id){
+                res.render('delete',{topics:results, topic:result[0]})
+        }else{
+                res.send('no id')
+        }
+        })
+    })
+})
+
+router.post('/topic/:id/delete',(req,res)=>{
+
+    var id = req.params.id
     
-//     db.query(sql,[id],(err,result)=>{
-//         if(!err){
-//         res.render('test',{topic:result})
-//         }else
-//         console.log(err)
-//     })   
-// })
+    var sql ='DELETE FROM topic WHERE id=?'
 
-// router.get('/topic/:id/edit',()=>{
+    db.query(sql,[id],(err,result)=>{
+        if(!err){
+            res.redirect(`/topic/add`)
+        }else {
+            console.log(err)
+        }
+    })
 
-// })
+})
 
 module.exports =router
